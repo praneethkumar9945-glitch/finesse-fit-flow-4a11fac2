@@ -1,0 +1,15 @@
+{
+  "source": "github",
+  "capabilities": [
+    {"capability": "code", "source": "repo pages/components/theme", "outcome": "ported to TanStack Start project", "status": "migrate"},
+    {"capability": "schema", "source": "drizzle migration SQL (profiles, classes, membership_plans, bookings, workout_logs)", "outcome": "apply to Lovable Cloud + diet tables", "status": "migrate"},
+    {"capability": "records", "source": "seed rows in migration (classes, plans; diet plans added)", "outcome": "literal INSERTs in migration", "status": "migrate"},
+    {"capability": "auth identities", "source": "no user export in repo", "outcome": "Lovable Cloud auth; request user export after preview", "status": "pending"},
+    {"capability": "authorization", "source": "RLS policies from source migration", "outcome": "recreated + diet policies", "status": "migrate"},
+    {"capability": "images", "source": "public/images in repo", "outcome": "copied", "status": "done"},
+    {"capability": "missing pages", "source": "repo references /auth and /dashboard but files absent", "outcome": "rebuilt on Lovable Cloud auth", "status": "migrate"},
+    {"capability": "new features", "source": "user request: advanced parallax, packages, diet option", "outcome": "motion+lenis, parallax system, diet page + tables", "status": "migrate"},
+    {"capability": "external providers", "source": "none detected", "outcome": "none", "status": "done"},
+    {"capability": "verification", "source": "build, tests, booking + diet flow in preview", "outcome": "", "status": "pending"}
+  ]
+}
