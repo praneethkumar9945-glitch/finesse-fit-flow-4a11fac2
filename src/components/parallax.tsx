@@ -52,7 +52,7 @@ export function Parallax({
   const translateY = useTransform(scrollYProgress, [0, 1], [y, -y]);
   return (
     <div ref={ref} className={className}>
-      <motion.div style={reduce ? undefined : { translateY }}>{children}</motion.div>
+      <motion.div style={reduce ? {} : { translateY }}>{children}</motion.div>
     </div>
   );
 }
@@ -77,7 +77,7 @@ export function ParallaxImage({
       <motion.img
         src={src}
         alt={alt}
-        style={reduce ? undefined : { y, scale: 1.28 }}
+        style={reduce ? {} : { y, scale: 1.28 }}
         className={imgClassName ?? "h-full w-full object-cover"}
       />
     </div>
@@ -99,8 +99,8 @@ export function Reveal({
   return (
     <motion.div
       className={className}
-      initial={reduce ? undefined : { opacity: 0, y }}
-      whileInView={reduce ? undefined : { opacity: 1, y: 0 }}
+      initial={reduce ? false : { opacity: 0, y }}
+      whileInView={reduce ? {} : { opacity: 1, y: 0 }}
       viewport={{ once: true, margin: "-70px" }}
       transition={{ duration: 0.7, delay, ease: [0.22, 1, 0.36, 1] }}
     >
@@ -135,7 +135,7 @@ export function ParallaxBadge({
   const translateY = useTransform(scrollYProgress, [0, 1], [speed, -speed]);
   return (
     <div ref={ref} className={className}>
-      <motion.div style={reduce ? undefined : { translateY }}>{children}</motion.div>
+      <motion.div style={reduce ? {} : { translateY }}>{children}</motion.div>
     </div>
   );
 }
