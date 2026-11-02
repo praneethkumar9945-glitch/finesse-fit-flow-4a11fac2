@@ -25,12 +25,22 @@ export type Profile = {
   goal: string | null;
 };
 
+export type SelectedDietPlan = {
+  id: string;
+  name: string;
+  goal: string;
+  description: string;
+  calories_per_day: number;
+  meals: { meal: string; items: string }[];
+  image_url: string | null;
+};
+
 export const getDashboardData = createServerFn({ method: "GET" })
   .middleware([requireSupabaseAuth])
   .handler(async ({ context }) => {
     const { supabase, userId } = context;
 
-    const [profileRes, bookingsRes, workoutsRes] = await Promise.all([
+    const [profileRes, bookingsRes, workoutsRes, dietRes] = await Promise.all([
       supabase.from("profiles").select("display_name, goal").eq("id", userId).maybeSingle(),
       supabase
         .from("bookings")
@@ -46,15 +56,23 @@ export const getDashboardData = createServerFn({ method: "GET" })
         .select("id, title, activity_type, duration_minutes, calories_burned, performed_at, notes")
         .eq("user_id", userId)
         .order("performed_at", { ascending: false }),
+      supabase
+        .from("user_diet_plans")
+        .select("diet_plan:diet_plans(id, name, goal, description, calories_per_day, meals, image_url)")
+        .eq("user_id", userId)
+        .maybeSingle(),
     ]);
 
     if (bookingsRes.error) throw new Error(bookingsRes.error.message);
     if (workoutsRes.error) throw new Error(workoutsRes.error.message);
+    if (dietRes.error) throw new Error(dietRes.error.message);
 
     return {
       profile: (profileRes.data ?? null) as Profile | null,
       bookings: (bookingsRes.data ?? []) as unknown as Booking[],
       workouts: (workoutsRes.data ?? []) as unknown as WorkoutLog[],
+      selectedDietPlan:
+        ((dietRes.data?.diet_plan as unknown as SelectedDietPlan | null) ?? null),
     };
   });
 

@@ -165,6 +165,7 @@ function BookingDialog({ gymClass, onClose }: { gymClass: GymClass | null; onClo
   if (!gymClass) return null;
 
   async function handleBook() {
+    if (!gymClass) return;
     const { data } = await supabase.auth.getUser();
     if (!data.user) {
       toast.info("Sign in to book a class");
